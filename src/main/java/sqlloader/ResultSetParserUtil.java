@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 /**
  * Utility for converting ResultSets into some Output formats
  */
@@ -95,6 +97,9 @@ public class ResultSetParserUtil {
                 xmlArray.append(">");
 
                 //Append value
+                if (rVal != null) {
+                    xmlArray.append(StringEscapeUtils.escapeXml11(rVal.toString()));
+                }
                 xmlArray.append(rVal);
 
                 //Append end element
