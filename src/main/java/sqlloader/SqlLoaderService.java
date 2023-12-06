@@ -116,9 +116,10 @@ public class SqlLoaderService {
         try (Connection conn = DriverManager.getConnection(dbUrl, username, password);
                 Statement stmt = conn.createStatement();
                 Statement stmt2 = conn.createStatement();
-                ResultSet rs2 = stmt2.executeQuery("SELECT column_name FROM all_cons_columns"
-                        + " WHERE constraint_name = (SELECT constraint_name FROM all_constraints WHERE UPPER(table_name) = UPPER('"
-                        + tableName + "') AND OWNER = UPPER('" + schemaName + "') AND CONSTRAINT_TYPE = 'P')");
+                ResultSet rs2 = stmt2.executeQuery(
+                        "SELECT column_name FROM all_cons_columns WHERE owner = UPPER('" + schemaName
+                                + "') AND constraint_name = (SELECT constraint_name FROM all_constraints WHERE UPPER(table_name) = UPPER('"
+                                + tableName + "') AND OWNER = UPPER('" + schemaName + "') AND CONSTRAINT_TYPE = 'P')");
                 ResultSet rs = stmt.executeQuery("select * from " + schemaName + "." + tableName)) {
 
             logger.info("--------------- Loading data for table: " + tableName + " ---------------");
