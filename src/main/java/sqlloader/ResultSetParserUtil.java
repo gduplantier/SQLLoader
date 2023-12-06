@@ -21,7 +21,7 @@ public class ResultSetParserUtil {
      * @param resultSet
      * @return a JSONArray
      * @throws Exception
-     *             if something happens
+     *                   if something happens
      */
     public static JSONArray convertToJSON(ResultSet resultSet) throws Exception {
         JSONArray jsonArray = new JSONArray();
@@ -47,19 +47,18 @@ public class ResultSetParserUtil {
      * @param resultSet
      * @return a XML String with list elements
      * @throws Exception
-     *             if something happens
+     *                   if something happens
      */
     public static String convertToXML(ResultSet resultSet) throws Exception {
         StringBuilder xmlArray = new StringBuilder("<results>\n");
         if (resultSet != null) {
             while (resultSet.next()) {
-                xmlArray.append(convertRecordToXML(resultSet, null));            
+                xmlArray.append(convertRecordToXML(resultSet, null));
             }
             xmlArray.append("</results>");
         }
         return xmlArray.toString();
     }
-
 
     /**
      * Convert a single result into an XML string
@@ -67,12 +66,13 @@ public class ResultSetParserUtil {
      * @param resultSet
      * @return a XML String with list elements
      * @throws Exception
-     *             if something happens
+     *                   if something happens
      */
     public static String convertRecordToXML(ResultSet resultSet, String metadata) throws Exception {
         StringBuilder xmlArray = new StringBuilder();
         xmlArray.append("<envelope><headers>");
-        xmlArray.append("<IngestDate>" + DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()) + "</IngestDate>");
+        xmlArray.append(
+                "<IngestDate>" + DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()) + "</IngestDate>");
         if (metadata != null) {
             for (String metaElement : metadata.split(";")) {
                 String[] tuple = metaElement.split(",");
@@ -86,31 +86,29 @@ public class ResultSetParserUtil {
         if (resultSet != null) {
             ResultSetMetaData rstMetaData = resultSet.getMetaData();
             int totalCols = rstMetaData.getColumnCount();
-            
+
             for (int i = 0; i < totalCols; i++) {
                 String rKey = rstMetaData.getColumnLabel(i + 1).toLowerCase();
                 Object rVal = resultSet.getObject(i + 1);
 
-                //Append start element
+                // Append start element
                 xmlArray.append("<");
                 xmlArray.append(rKey.trim());
                 xmlArray.append(">");
 
-                //Append value
+                // Append value
                 if (rVal != null) {
                     xmlArray.append(StringEscapeUtils.escapeXml11(rVal.toString()));
                 }
-                xmlArray.append(rVal);
 
-                //Append end element
+                // Append end element
                 xmlArray.append("</");
                 xmlArray.append(rKey.trim());
                 xmlArray.append(">");
             }
-            
+
             xmlArray.append("</instance></envelope>");
         }
         return xmlArray.toString();
     }
 }
-
