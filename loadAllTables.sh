@@ -7,7 +7,8 @@ while read table; do
         --jdbc.driver.password=oracle \
         --marklogic.password=admin \
         --marklogic.collections=$SOURCE,$SCHEMA,$table \
-        --sqlloader.table=$table \
+        --sqlloader.source=$SOURCE \
         --sqlloader.schema=$SCHEMA \
+        --sqlloader.table=$table \
         --sqlloader.metadata=source,$SOURCE\;owner,marklogic\;DbSchema,$SCHEMA\;table,$table
 done <./tables.txt

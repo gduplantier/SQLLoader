@@ -6,11 +6,12 @@ This is a utility for querying an Oracle database table and loading the records 
 - runnable jar will be located in build/libs folder
 
 ## Running
-To test: gradlew run
-See runLoader.sh script for running executable jar
+- To test: gradlew run
+- See runLoader.sh script for running executable jar
+- See loadAllTables.sh for loading multiple tables
 
 ## Performance
-Not intended for large result sets. Currently lacks any performance optimization or testing.
+Not intended for large result sets. Currently lacks any performance testing or optimization
 
 ## SSL Setup
 The steps to install a new certificate into the Java default truststore are:
